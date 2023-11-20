@@ -28,6 +28,24 @@ namespace GerenciamentoFinanceiro.Controller
             return await _context.Contas.ToListAsync();
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Conta>> GetConta(Guid id)
+        {
+            if(_context.Contas == null)
+            {
+                return NotFound();
+            }
+
+            var conta = await _context.Contas.FindAsync(id);
+
+            if(conta == null)
+            {
+                return NotFound();
+            }
+
+            return conta;
+        }
+
         private bool ContaExists(Guid id)
         {
             return(_context.Contas?.Any(conta => conta.ID == id)).GetValueOrDefault();
