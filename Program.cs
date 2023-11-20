@@ -1,7 +1,11 @@
+using GerenciamentoFinanceiro.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
+builder.Services.AddDbContext<ContaContext>(opt => opt.UseInMemoryDatabase("ListaContas"));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
