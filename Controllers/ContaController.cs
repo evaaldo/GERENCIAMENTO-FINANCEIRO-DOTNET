@@ -46,6 +46,20 @@ namespace GerenciamentoFinanceiro.Controller
             return conta;
         }
 
+        [HttpPost]
+        public async Task<ActionResult<Conta>> PostConta(Conta conta)
+        {
+            if(_context.Contas == null)
+            {
+                return Problem("Construtor vazio!");
+            }
+
+            _context.Contas.Add(conta);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetContas", new { id = conta.ID }, conta);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutConta(Guid id, Conta conta)
         {
