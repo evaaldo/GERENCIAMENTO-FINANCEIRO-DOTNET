@@ -1,6 +1,8 @@
 using GerenciamentoFinanceiro.Context;
+using GerenciamentoFinanceiro.Model;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GerenciamentoFinanceiro.Controller
 {
@@ -13,6 +15,17 @@ namespace GerenciamentoFinanceiro.Controller
         public ContaController(ContaContext context)
         {
             _context = context;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Conta>>> GetConta()
+        {
+            if(_context.Contas == null)
+            {
+                return NotFound();
+            }
+
+            return await _context.Contas.ToListAsync();
         }
 
         private bool ContaExists(Guid id)
