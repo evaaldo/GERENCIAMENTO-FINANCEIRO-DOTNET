@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GerenciamentoFinanceiro.Controller
 {
-    [Route("Contas")]
+    [Microsoft.AspNetCore.Mvc.Route("Contas")]
     [ApiController]
     public class ContaController : ControllerBase
     {
