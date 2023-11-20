@@ -75,6 +75,27 @@ namespace GerenciamentoFinanceiro.Controller
             return NoContent();
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteConta(Guid id)
+        {
+            if(_context.Contas == null)
+            {
+                return NotFound();
+            }
+
+            var conta = await _context.Contas.FindAsync(id);
+
+            if(conta == null)
+            {
+                return NotFound();
+            }
+
+            _context.Contas.Remove(conta);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
         private bool ContaExists(Guid id)
         {
             return(_context.Contas?.Any(conta => conta.ID == id)).GetValueOrDefault();
