@@ -46,6 +46,35 @@ namespace GerenciamentoFinanceiro.Controller
             return conta;
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutConta(Guid id, Conta conta)
+        {
+            if(conta.ID != id)
+            {
+                return BadRequest();
+            }
+
+            _context.Contas.Entry(conta).State = EntityState.Modified;
+            
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch(DbUpdateConcurrencyException)
+            {
+                if(!ContaExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
         private bool ContaExists(Guid id)
         {
             return(_context.Contas?.Any(conta => conta.ID == id)).GetValueOrDefault();
